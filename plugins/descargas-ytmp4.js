@@ -16,7 +16,6 @@ let { title, views, likes, description, author } = json.metadata
 let txt = `• *Titulo :* ${title}
 • *Autor :* ${author}
 • *Tamaño :* ${json.downloads.size}`
-// await conn.sendFile(m.chat, json.downloads.url, 'HasumiBotFreeCodes.mp4', HS, m)
                 await conn.sendMessage(m.chat, { video: { url: json.downloads.url }, caption: txt }, { quoted: m });
 } catch (error) {
 console.error(error)
