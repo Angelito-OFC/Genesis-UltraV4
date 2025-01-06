@@ -30,9 +30,9 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
         externalAdReply: {
           showAdAttribution: true,
           mediaType: 2,
-          mediaUrl: author,
+          mediaUrl: url,
           title: title,
-          sourceUrl: author,
+          sourceUrl: url,
           thumbnail: await (await conn.getFile(thumbnail)).data
         }
       }
