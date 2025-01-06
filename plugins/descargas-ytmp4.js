@@ -1,21 +1,17 @@
-import fetch from "node-fetch"
- 
-let handler = async (m, { text, conn, args, usedPrefix, command }) => {
-if (!args[0]) return m.reply("ingresa un link de youtube")
- 
+import fetch from 'node-fetch'
+
+let handler = async (m, { conn, text, usedPrefix, command }) => {
+if (!text) return conn.reply(m.chat, `❀ Ingresa un  link de youtube`, m, rcanal)
+
 try {
-let api = await fetch(`https://api.agatz.xyz/api/ytmp4?url=${args[0]}`)
-let json = await api.json()
-let { title, thumbnail, quality, downloadUrl:dl_url } = json.data
- 
-let JT = `*Titulo :* ${title}
-*Calidad :* ${quality}`
- 
-await conn.sendFile(m.chat, dl_url, 'HasumiBotFreeCodes.mp4', JT, m)
+let api = await (await fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${text}`)).json()
+let dl_url = api.data.dl
+
+await conn.sendMessage(m.chat, { video: { url: dl_url }, caption: null }, { quoted: m })
 } catch (error) {
 console.error(error)
 }}
- 
+
 handler.command = ['ytmp4']
- 
+
 export default handler
