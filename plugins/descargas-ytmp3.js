@@ -37,6 +37,8 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
     }
 };
 
+handler.help = ['ytmp3 *<url>*'];
+handler.tags = ['dl'];
 handler.command = /^(ytmp3)$/i;
 
 export default handler;
