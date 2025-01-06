@@ -22,8 +22,8 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 • *Autor :* ${author}
 • *Tamaño :* ${json.downloads.size}`;
 
-        await m.react('✅');
         await conn.sendMessage(m.chat, { video: { url: json.downloads.url }, caption: txt }, { quoted: m });
+        await m.react('✅');
     } catch (error) {
         console.error(error);
         await m.react('❌'); // Reacción en caso de error
