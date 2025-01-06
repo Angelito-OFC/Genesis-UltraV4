@@ -33,7 +33,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
           mediaUrl: url,
           title: title,
           sourceUrl: url,
-          thumbnail: await (await conn.getFile(thumbnail)).metadata
+          thumbnail: thumbnail,
         }
       }
     };
