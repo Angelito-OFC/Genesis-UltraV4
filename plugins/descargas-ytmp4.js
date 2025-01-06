@@ -20,7 +20,8 @@ let HS = `- *Titulo :* ${title}
 - *Autor :* ${author}
 - *Tamaño :* ${json.downloads.size}
 `
-await conn.sendFile(m.chat, json.downloads.url, 'HasumiBotFreeCodes.mp4', HS, m)
+// await conn.sendFile(m.chat, json.downloads.url, 'HasumiBotFreeCodes.mp4', HS, m)
+                await conn.sendMessage(m.chat, { video: { url: res.media[i].url }, caption: caption }, { quoted: m });
 } catch (error) {
 console.error(error)
 }}
