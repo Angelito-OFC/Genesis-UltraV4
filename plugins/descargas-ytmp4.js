@@ -8,8 +8,8 @@ import fetch from 'node-fetch'
 
 let handler = async (m, { conn, command, text, usedPrefix }) => {
     if (!text) {
-        await m.react('✖️'); // Reacción en caso de que falte el texto
-        return conn.reply(m.chat, `☁️ Ingresa un link de youtube`, m);
+        await m.react('✖️');
+        return conn.reply(m.chat, `☁️ Ingresa un link de youtube`, m, fake);
     }
 
     try {
@@ -26,7 +26,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
         await m.react('✅');
     } catch (error) {
         console.error(error);
-        await m.react('❌'); // Reacción en caso de error
+        await m.react('❌');
         conn.reply(m.chat, `☁️ Hubo un error al procesar tu solicitud. Inténtalo de nuevo más tarde.`, m);
     }
 };
