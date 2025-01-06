@@ -11,7 +11,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 
         let api = await fetch(`https://axeel.my.id/api/download/audio?url=${text}`);
         let json = await api.json();
-        let { title, views, likes, description, author, thumbnail } = json.metadata;
+        let { title, views, thumbnail, likes, description, author } = json.metadata;
 
         let HS = `❀ *Titulo :* ${title}
 ❀ *Descripcion :* ${description}
