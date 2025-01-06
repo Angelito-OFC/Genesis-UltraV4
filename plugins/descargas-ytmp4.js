@@ -1,59 +1,49 @@
-import fetch from 'node-fetch';
+/* 
 
-let handler = async (m, { conn, text }) => {
-  if (!text) {
-    return m.reply("🤍 Por favor, ingresa una URL válida de YouTube.");
-  }
-  await m.react('🕓');
+[ Canal Principal ] :
+https://whatsapp.com/channel/0029VaeQcFXEFeXtNMHk0D0n
 
-  // Expresión regular para validar la URL de YouTube
-  let ytUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-  if (!ytUrlRegex.test(text)) {
-    return m.reply("❀ La URL ingresada no es válida. Asegúrate de que sea un enlace de YouTube.");
-  }
+[ Canal Rikka Takanashi Bot ] :
+https://whatsapp.com/channel/0029VaksDf4I1rcsIO6Rip2X
 
-  try {
-    let apiUrl = `https://api.giftedtech.my.id/api/download/dlmp4?apikey=gifted&url=${encodeURIComponent(text)}`;
-    let apiResponse = await fetch(apiUrl);
+[ Canal StarlightsTeam] :
+https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S
 
-    // Validar si la respuesta es exitosa
-    if (!apiResponse.ok) {
-      throw new Error(`Error en la API: ${apiResponse.status} ${apiResponse.statusText}`);
-    }
+[ HasumiBot FreeCodes ] :
+https://whatsapp.com/channel/0029Vanjyqb2f3ERifCpGT0W
+*/
 
-    // Validar si la respuesta es JSON
-    let contentType = apiResponse.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      let responseText = await apiResponse.text();
-      console.error("Respuesta inesperada de la API:", responseText);
-      throw new Error('La respuesta no es un JSON válido.');
-    }
+// *[ ❀ PLAY 2 (video) ]*
+import fetch from 'node-fetch'
+import yts from 'yt-search'
 
-    // Parsear el JSON de la respuesta
-    let json = await apiResponse.json();
-    if (!json.result || !json.result.download_url || !json.result.title) {
-      throw new Error('La API devolvió un formato inesperado.');
-    }
+let handler = async (m, { conn, text, args }) => {
+if (!text) {
+return m.reply("❀ ingresa un texto de lo que quieres buscar")
+}
+    
+let ytres = await search(args.join(" "))
+let txt = `- *Título* : ${ytres[0].title}
+- *Duración* : ${ytres[0].timestamp}
+- *Publicado* : ${ytres[0].ago}
+- *Canal* : ${ytres[0].author.name || 'Desconocido'}
+- *Url* : ${'https://youtu.be/' + ytres[0].videoId}`
+await conn.sendFile(m.chat, ytres[0].image, 'thumbnail.jpg', txt, m)
+    
+try {
+let api = await fetch(`https://api.giftedtech.my.id/api/download/dlmp4?apikey=gifted&url=${ytres[0].url}`)
+let json = await api.json()
+let { quality, title, download_url } = json.result
+await conn.sendMessage(m.chat, { video: { url: download_url }, caption: `${title}`, mimetype: 'video/mp4', fileName: `${title}` + `.mp4`}, {quoted: m })
+} catch (error) {
+console.error(error)
+}}
 
-    let { title, download_url } = json.result;
+handler.command = /^(play2)$/i
 
-    // Enviar el video al chat
-    await m.react('✅');
-    await conn.sendMessage(m.chat, {
-      video: { url: download_url },
-      caption: `_${title}_`,
-      mimetype: 'video/mp4',
-      fileName: `${title}.mp4`
-    }, { quoted: m });
-  } catch (error) {
-    console.error("Error procesando la solicitud:", error.message);
-    m.reply(`❀ Hubo un error al procesar la URL: ${error.message}`);
-  }
-};
+export default handler
 
-// Configuración del comando
-handler.help = ['ytmp4 *<link yt>*'];
-handler.tags = ['dl'];
-handler.command = ['ytmp4', 'ytv', 'fgmp4'];
-
-export default handler;
+async function search(query, options = {}) {
+  let search = await yts.search({ query, hl: "es", gl: "ES", ...options })
+  return search.videos
+}
