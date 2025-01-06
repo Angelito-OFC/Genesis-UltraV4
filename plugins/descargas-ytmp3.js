@@ -11,7 +11,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 
         let api = await fetch(`https://axeel.my.id/api/download/audio?url=${text}`);
         let json = await api.json();
-        let { title, views, likes, description, author } = json.metadata;
+        let { title, views, likes, description, author, thumbnail } = json.metadata;
 
         let HS = `❀ *Titulo :* ${title}
 ❀ *Descripcion :* ${description}
@@ -22,7 +22,23 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 
         m.reply(HS);
 
-        await conn.sendMessage(m.chat, { audio: { url: json.downloads.url }, mimetype: 'audio/mpeg' }, { quoted: m });
+      const doc = {
+      audio: { url: json.downloads.url },
+      mimetype: 'audio/mp4',
+      fileName: `${title}.mp3`,
+      contextInfo: {
+        externalAdReply: {
+          showAdAttribution: true,
+          mediaType: 2,
+          mediaUrl: text,
+          title: title,
+          sourceUrl: author,
+          thumbnail: await (await conn.getFile(dp.results.thumbnail)).data
+        }
+      }
+    };
+    await conn.sendMessage(m.chat, doc, { quoted: m })
+     //   await conn.sendMessage(m.chat, { audio: { url: json.downloads.url }, mimetype: 'audio/mpeg' }, { quoted: m });
         await m.react('✅'); // Reacción de éxito
     } catch (error) {
         console.error(error);
