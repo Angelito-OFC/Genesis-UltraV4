@@ -1,5 +1,5 @@
 /* 
-By Jtxs
+
 [ Canal Principal ] :
 https://whatsapp.com/channel/0029VaeQcFXEFeXtNMHk0D0n
 
@@ -13,26 +13,22 @@ https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S
 https://whatsapp.com/channel/0029Vanjyqb2f3ERifCpGT0W
 */
 
-// *[ ❀ YTMP4V2 ]*
+
+// *[ ❀ YTMP4 ]*
 import fetch from 'node-fetch'
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) {
-return conn.reply(m.chat, `❀ Ingresa el link de un video de youtube `, m)
-}
+if (!text) return conn.reply(m.chat, `❀ Ingresa un  link de youtube`, m, rcanal)
     
 try {
-let calidad = '360' // Calidades disponibles : 144, 240, 360, 480, 720, 1080, 1440, 2160
-let api = await fetch(`https://api.giftedtech.my.id/api/download/dlmp4q?apikey=gifted&quality=${calidad}&url=${text}`)
-let json = await api.json()
-let { quality, title, download_url, thumbnail } = json.result
+let api = await (await fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${text}`)).json()
+let dl_url = api.data.dl
 
-
-await conn.sendMessage(m.chat, { video: { url: download_url }, caption: `${title}`, mimetype: 'video/mp4', fileName: `${title}` + `.mp4`}, {quoted: m })
+await conn.sendMessage(m.chat, { video: { url: dl_url }, caption: null }, { quoted: m })
 } catch (error) {
 console.error(error)
 }}
 
-handler.command = /^(ytmp4v2)$/i
+handler.command = ['ytmp4']
 
 export default handler
