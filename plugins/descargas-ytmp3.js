@@ -24,7 +24,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 
       const doc = {
       audio: { url: json.downloads.url },
-      mimetype: 'audio/mp4',
+      mimetype: 'audio/mpeg',
       fileName: `${title}.mp3`,
       contextInfo: {
         externalAdReply: {
@@ -39,7 +39,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
     };
     await conn.sendMessage(m.chat, doc, { quoted: m })
      //   await conn.sendMessage(m.chat, { audio: { url: json.downloads.url }, mimetype: 'audio/mpeg' }, { quoted: m });
-        await m.react('✅');
+        await m.react('😼');
     } catch (error) {
         console.error(error);
         await m.react('❌');
