@@ -13,15 +13,6 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
         let json = await api.json();
         let { title, url, views, thumbnail, likes, description, author } = json.metadata;
 
-        let HS = `❀ *Titulo :* ${title}
-❀ *Descripcion :* ${description}
-❀ *Visitas :* ${views}
-❀ *Likes :* ${likes}
-❀ *Autor :* ${author}
-❀ *Tamaño :* ${json.downloads.size}`;
-
-      //  m.reply(HS);
-
       const doc = {
       audio: { url: json.downloads.url },
       mimetype: 'audio/mpeg',
@@ -39,7 +30,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
     };
     await conn.sendMessage(m.chat, doc, { quoted: m })
      //   await conn.sendMessage(m.chat, { audio: { url: json.downloads.url }, mimetype: 'audio/mpeg' }, { quoted: m });
-        await m.react('😼');
+        await m.react('✅');
     } catch (error) {
         console.error(error);
         await m.react('❌');
