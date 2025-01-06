@@ -13,15 +13,14 @@ try {
 let api = await fetch(`https://axeel.my.id/api/download/video?url=${text}`)
 let json = await api.json()
 let { title, views, likes, description, author } = json.metadata
-let HS = `- *Titulo :* ${title}
-- *Descripcion :* ${description}
-- *Visitas :* ${views}
-- *Likes :* ${likes}
-- *Autor :* ${author}
-- *Tamaño :* ${json.downloads.size}
+let txt = `• *Titulo :* ${title}
+• *Visitas :* ${views}
+• *Likes :* ${likes}
+• *Autor :* ${author}
+• *Tamaño :* ${json.downloads.size}
 `
 // await conn.sendFile(m.chat, json.downloads.url, 'HasumiBotFreeCodes.mp4', HS, m)
-                await conn.sendMessage(m.chat, { video: { url: res.media[i].url }, caption: caption }, { quoted: m });
+                await conn.sendMessage(m.chat, { video: { url: json.downloads.url }, caption: txt }, { quoted: m });
 } catch (error) {
 console.error(error)
 }}
