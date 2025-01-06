@@ -1,24 +1,42 @@
-import axios from 'axios'
-import yts from 'yt-search'
- 
-const handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text || text.trim() === "") return m.reply(`ingresa el texto de lo que quieras buscar`)
+/* 
+
+*❀ By JTxs*
+
+[ Canal Principal ] :
+https://whatsapp.com/channel/0029VaeQcFXEFeXtNMHk0D0n
+
+[ Canal Rikka Takanashi Bot ] :
+https://whatsapp.com/channel/0029VaksDf4I1rcsIO6Rip2X
+
+[ Canal StarlightsTeam] :
+https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S
+
+[ HasumiBot FreeCodes ] :
+https://whatsapp.com/channel/0029Vanjyqb2f3ERifCpGT0W
+*/
+
+// *[ ❀ YTMP4 ]*
+import fetch from 'node-fetch'
+
+let handler = async (m, { conn, command, text, usedPrefix }) => {
+if (!text) return conn.reply(m.chat, `❀ Ingresa un link de youtube`, m)
+
 try {
-let api = await axios.get(`https://Ikygantengbangetanjay-api.hf.space/yt?query=${encodeURIComponent(text)}`);
-let json = api.data.result
- 
-if (json.duration.seconds >= 3600) {
-return m.reply('el video no puede durar mas de 1 hora')
-}
-let dl_urlaud = json.download.audio
-let dl_urlvid = json.download.video
- 
-await conn.sendMessage(m.chat, { video: { url: dl_urlaud }, mimetype: 'video/mp4', fileName: `${json.title}.mp4`, caption: `${json.title}` }, { quoted: m })
- 
-await conn.sendMessage(m.chat, { audio: { url: dl_urlvid }, mimetype: 'audio/mpeg', fileName: `${json.title}.mp3`, }, { quoted: m })
+let api = await fetch(`https://axeel.my.id/api/download/video?url=${text}`)
+let json = await api.json()
+let { title, views, likes, description, author } = json.metadata
+let HS = `- *Titulo :* ${title}
+- *Descripcion :* ${description}
+- *Visitas :* ${views}
+- *Likes :* ${likes}
+- *Autor :* ${author}
+- *Tamaño :* ${json.downloads.size}
+`
+await conn.sendFile(m.chat, json.downloads.url, 'HasumiBotFreeCodes.mp4', HS, m)
 } catch (error) {
-console.log(error)
+console.error(error)
 }}
-handler.command = /^(playt)$/i;
- 
+
+handler.command = /^(ytmp4)$/i
+
 export default handler
