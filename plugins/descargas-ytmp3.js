@@ -20,7 +20,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 ❀ *Autor :* ${author}
 ❀ *Tamaño :* ${json.downloads.size}`;
 
-        m.reply(HS);
+      //  m.reply(HS);
 
       const doc = {
       audio: { url: json.downloads.url },
@@ -30,10 +30,10 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
         externalAdReply: {
           showAdAttribution: true,
           mediaType: 2,
-          mediaUrl: text,
+          mediaUrl: author,
           title: title,
           sourceUrl: author,
-          thumbnail: await (await conn.getFile(dp.results.thumbnail)).data
+          thumbnail: await (await conn.getFile(thumbnail)).data
         }
       }
     };
