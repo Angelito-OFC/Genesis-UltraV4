@@ -25,6 +25,8 @@ try {
 let api = await fetch(`https://axeel.my.id/api/download/audio?url=${text}`)
 let json = await api.json()
 let { title, views, likes, description, author, thumbnail } = json.metadata
+let img = await (await fetch(thumbnail)).buffer()
+
 let HS = `- *Titulo :* ${title}
 - *Descripcion :* ${description}
 - *Visitas :* ${views}
@@ -32,7 +34,8 @@ let HS = `- *Titulo :* ${title}
 - *Autor :* ${author}
 - *Tamaño :* ${json.downloads.size}
 `
-m.reply(HS)
+await conn.sendMessage(m.chat, { image: img, caption: HS }, { quoted: m })
+// m.reply(HS)
 await conn.sendMessage(m.chat, { audio: { url: json.downloads.url }, mimetype: 'audio/mpeg' }, { quoted: m });
 } catch (error) {
 console.error(error)
