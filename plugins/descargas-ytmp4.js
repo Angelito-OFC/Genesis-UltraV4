@@ -7,7 +7,7 @@ https://whatsapp.com/channel/0029VaeQcFXEFeXtNMHk0D0n*/
 import fetch from 'node-fetch'
 
 let handler = async (m, { conn, command, text, usedPrefix }) => {
-if (!text) return conn.reply(m.chat, `❀ Ingresa un link de youtube`, m)
+if (!text) return conn.reply(m.chat, `☁️ Ingresa un link de youtube`, m)
 
 try {
 let api = await fetch(`https://axeel.my.id/api/download/video?url=${text}`)
