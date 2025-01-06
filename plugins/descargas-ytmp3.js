@@ -7,7 +7,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
     }
 
     try {
-        await m.react('🕒'); // Reacción mientras se procesa la solicitud
+        await m.react('🕒');
 
         let api = await fetch(`https://axeel.my.id/api/download/audio?url=${text}`);
         let json = await api.json();
