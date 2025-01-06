@@ -1,24 +1,6 @@
-/* import fetch from 'node-fetch'
-
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) return conn.reply(m.chat, `❀ Ingresa un  link de youtube`, m)
-
-try {
-let api = await (await fetch(`https://api.siputzx.my.id/api/d/ytmp3?url=${text}`)).json()
-let dl_url = api.data.dl
-let dl_url = api.data.title
-
-conn.sendMessage(m.chat, { audio: { url: dl_url }, mimetype: "audio/mp4", ptt: true }, { quoted: m })
-} catch (error) {
-console.error(error)
-}}
-
-handler.command = ['ytmp3']
-
-export default handler */
-
-
 /* 
+
+*❀ By JTxs*
 
 [ Canal Principal ] :
 https://whatsapp.com/channel/0029VaeQcFXEFeXtNMHk0D0n
@@ -36,17 +18,22 @@ https://whatsapp.com/channel/0029Vanjyqb2f3ERifCpGT0W
 // *[ ❀ YTMP3 ]*
 import fetch from 'node-fetch'
 
-let handler = async (m, { conn, text }) => {
-if (!text) {
-return m.reply("❀ Ingresa un link de youtube")
-}
-    
-try {
-let api = await fetch(`https://api.giftedtech.my.id/api/download/dlmp3?apikey=gifted&url=${text}`)
-let json = await api.json()
-let { quality, title, download_url } = json.result
+let handler = async (m, { conn, command, text, usedPrefix }) => {
+if (!text) return conn.reply(m.chat, `❀ Ingresa un link de youtube`, m)
 
-await conn.sendMessage(m.chat, { audio: { url: download_url }, fileName: `${title}.mp3`, mimetype: 'audio/mp4' }, { quoted: m })
+try {
+let api = await fetch(`https://axeel.my.id/api/download/audio?url=${text}`)
+let json = await api.json()
+let { title, views, likes, description, author, thumbnail } = json.metadata
+let HS = `- *Titulo :* ${title}
+- *Descripcion :* ${description}
+- *Visitas :* ${views}
+- *Likes :* ${likes}
+- *Autor :* ${author}
+- *Tamaño :* ${json.downloads.size}
+`
+m.reply(HS)
+await conn.sendMessage(m.chat, { audio: { url: json.downloads.url }, mimetype: 'audio/mpeg' }, { quoted: m });
 } catch (error) {
 console.error(error)
 }}
