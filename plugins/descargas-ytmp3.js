@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 let handler = async (m, { conn, command, text, usedPrefix }) => {
     if (!text) {
-        await m.react('❓'); // Reacción si falta el texto
+        await m.react('✖️');
         return conn.reply(m.chat, `❀ Ingresa un link de YouTube`, m);
     }
 
@@ -39,10 +39,10 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
     };
     await conn.sendMessage(m.chat, doc, { quoted: m })
      //   await conn.sendMessage(m.chat, { audio: { url: json.downloads.url }, mimetype: 'audio/mpeg' }, { quoted: m });
-        await m.react('✅'); // Reacción de éxito
+        await m.react('✅');
     } catch (error) {
         console.error(error);
-        await m.react('❌'); // Reacción de error
+        await m.react('❌');
         conn.reply(m.chat, `❀ Hubo un error al procesar tu solicitud. Inténtalo de nuevo más tarde.`, m);
     }
 };
