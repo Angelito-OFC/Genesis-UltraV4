@@ -17,7 +17,6 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
         let { title, views, likes, description, author } = json.metadata;
 
         let HS = `❀ *Titulo :* ${title}
-❀ *Descripcion :* ${description}
 ❀ *Visitas :* ${views}
 ❀ *Likes :* ${likes}
 ❀ *Autor :* ${author}
