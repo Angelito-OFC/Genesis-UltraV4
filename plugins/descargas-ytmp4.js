@@ -14,8 +14,6 @@ let api = await fetch(`https://axeel.my.id/api/download/video?url=${text}`)
 let json = await api.json()
 let { title, views, likes, description, author } = json.metadata
 let txt = `• *Titulo :* ${title}
-• *Visitas :* ${views}
-• *Likes :* ${likes}
 • *Autor :* ${author}
 • *Tamaño :* ${json.downloads.size}
 `
