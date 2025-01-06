@@ -1,36 +1,38 @@
+/* 
+By Jtxs
+[ Canal Principal ] :
+https://whatsapp.com/channel/0029VaeQcFXEFeXtNMHk0D0n
+
+[ Canal Rikka Takanashi Bot ] :
+https://whatsapp.com/channel/0029VaksDf4I1rcsIO6Rip2X
+
+[ Canal StarlightsTeam] :
+https://whatsapp.com/channel/0029VaBfsIwGk1FyaqFcK91S
+
+[ HasumiBot FreeCodes ] :
+https://whatsapp.com/channel/0029Vanjyqb2f3ERifCpGT0W
+*/
+
+// *[ ❀ YTMP4V2 ]*
 import fetch from 'node-fetch'
 
-let handler = async (m, { conn, text }) => {
-  if (!text) {
-    return m.reply("🤍 Por favor, ingresa una URL válida de YouTube.")
-  }
-    await m.react('🕓')
-
-  let ytUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-  if (!ytUrlRegex.test(text)) {
-    return m.reply("❀ La URL ingresada no es válida. Asegúrate de que sea un enlace de YouTube.")
-  }
-
-  try {
-    let api = await fetch(`https://api.giftedtech.my.id/api/download/dlmp4?apikey=gifted&url=${text}`)
-    let json = await api.json()
-    let { quality, title, download_url } = json.result
-
-    await m.react('✅')
-    await conn.sendMessage(m.chat, { 
-      video: { url: download_url }, 
-      caption: `_${title}_`, 
-      mimetype: 'video/mp4', 
-      fileName: `${title}.mp4` 
-    }, { quoted: m })
-  } catch (error) {
-    console.error(error)
-    m.reply("❀ Hubo un error al procesar la URL. Inténtalo nuevamente.")
-  }
+let handler = async (m, { conn, text, usedPrefix, command }) => {
+if (!text) {
+return conn.reply(m.chat, `❀ Ingresa el link de un video de youtube `, m)
 }
+    
+try {
+let calidad = '360' // Calidades disponibles : 144, 240, 360, 480, 720, 1080, 1440, 2160
+let api = await fetch(`https://api.giftedtech.my.id/api/download/dlmp4q?apikey=gifted&quality=${calidad}&url=${text}`)
+let json = await api.json()
+let { quality, title, download_url, thumbnail } = json.result
 
-handler.help = ['ytmp4 *<link yt>*']
-handler.tags = ['dl']
-handler.command = ['ytmp4', 'ytv', 'fgmp4']
+
+await conn.sendMessage(m.chat, { video: { url: download_url }, caption: `${title}`, mimetype: 'video/mp4', fileName: `${title}` + `.mp4`}, {quoted: m })
+} catch (error) {
+console.error(error)
+}}
+
+handler.command = /^(ytmp4v2)$/i
 
 export default handler
