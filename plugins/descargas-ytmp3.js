@@ -29,11 +29,11 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
       }
     };
     await conn.sendMessage(m.chat, doc, { quoted: m })
-        await m.react('🎧');
+        await m.react('✅');
     } catch (error) {
         console.error(error);
         await m.react('❌');
-        conn.reply(m.chat, `❀ Hubo un error al procesar tu solicitud. Inténtalo de nuevo más tarde.`, m);
+        conn.reply(m.chat, `☁️ Hubo un error al procesar tu solicitud. Inténtalo de nuevo más tarde.`, m);
     }
 };
 
